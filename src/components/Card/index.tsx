@@ -1,6 +1,7 @@
 import React from 'react';
 import Text from '../Text';
 import Button from '../Button';
+import Skeleton from 'react-loading-skeleton';
 import { FaEllipsisV } from 'react-icons/fa';
 import * as S from './style';
 
@@ -9,6 +10,7 @@ interface CardProps {
   gain: number;
   total: number;
   profitability: number;
+  loading?: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -16,6 +18,7 @@ const Card: React.FC<CardProps> = ({
   gain,
   total,
   profitability,
+  loading = false,
 }: CardProps) => {
   const formatMoney = (amount: number): string => {
     return Number(amount)
@@ -25,9 +28,22 @@ const Card: React.FC<CardProps> = ({
   };
 
   const infosCard = [
-    { name: 'Rentabilidade/mês', value: `${profitability.toFixed(3)}%` },
-    { name: 'CDI', value: `${cdi.toFixed(2)}%` },
-    { name: 'Ganho/mês', value: `R$ ${formatMoney(gain)}` },
+    {
+      name: 'Rentabilidade/mês',
+      value: loading ? (
+        <Skeleton width="100px" />
+      ) : (
+        `${profitability.toFixed(3)}%`
+      ),
+    },
+    {
+      name: 'CDI',
+      value: loading ? <Skeleton width="100px" /> : `${cdi.toFixed(2)}%`,
+    },
+    {
+      name: 'Ganho/mês',
+      value: loading ? <Skeleton width="100px" /> : `R$ ${formatMoney(gain)}`,
+    },
   ];
 
   return (
@@ -43,7 +59,7 @@ const Card: React.FC<CardProps> = ({
           Valor investido
         </Text>
         <Text tag="p" color="#3B5CB8" fontSize={20} fontWeight={700}>
-          R$ {formatMoney(total)}
+          {loading ? <Skeleton width="140px" /> : `R$ ${formatMoney(total)}`}
         </Text>
       </S.CardTotal>
       <S.CardInfo>
