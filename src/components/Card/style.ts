@@ -42,6 +42,6 @@ export const CardFooter = styled.div`
   display: flex;
   flex-direction: row-reverse;
   button {
-    margin: 15px 0;
+    margin: 10px 0;
   }
 `

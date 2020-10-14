@@ -52,7 +52,7 @@ const Card: React.FC<CardProps> = ({
             <Text tag="p" color="#606377" fontSize={14} fontWeight={400}>
               {i.name}
             </Text>
-            <Text tag="p" color="#3B5CB8" fontSize={16} fontWeight={700}>
+            <Text tag="p" color="#3B5CB8" fontSize={18} fontWeight={700}>
               {i.value}
             </Text>
           </div>
