@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { ALL_WEALTH_SUMARY } from 'querys/wealth';
+import { ALL_WEALTH_SUMARY } from 'services/queries/wealth';
 import { Card, Text } from 'components';
 
 interface IwealthSummaryData {
