@@ -2,6 +2,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { ALL_WEALTH_SUMARY } from 'services/queries/wealth';
 import { Card, Text } from 'components';
+import client from 'api/client';
 
 interface IwealthSummaryData {
   id: number;
@@ -16,6 +17,14 @@ const App: React.FC = () => {
     variables: { limit: 10 },
   });
 
+  const handleDelete = (): void => {
+    client.writeQuery({
+      query: ALL_WEALTH_SUMARY,
+      variables: { limit: 10 },
+      data: { wealthSummary: [] },
+    });
+  };
+
   if (loading) {
     return <Card loading cdi={0} gain={0} total={0} profitability={0} />;
   }
@@ -27,6 +36,7 @@ const App: React.FC = () => {
       </Text>
     );
   }
+
   return (
     <div>
       {data &&
@@ -37,6 +47,7 @@ const App: React.FC = () => {
             gain={d.gain}
             total={d.total}
             profitability={d.profitability}
+            onClick={handleDelete}
           />
         ))}
     </div>

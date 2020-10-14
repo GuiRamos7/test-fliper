@@ -1,8 +1,8 @@
 import React from 'react';
 import Text from '../Text';
 import Button from '../Button';
+import Dropdown from '../Dropdown';
 import Skeleton from 'react-loading-skeleton';
-import { FaEllipsisV } from 'react-icons/fa';
 import * as S from './style';
 
 interface CardProps {
@@ -11,6 +11,7 @@ interface CardProps {
   total: number;
   profitability: number;
   loading?: boolean;
+  onClick?: () => void;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -19,6 +20,7 @@ const Card: React.FC<CardProps> = ({
   total,
   profitability,
   loading = false,
+  onClick,
 }: CardProps) => {
   const formatMoney = (amount: number): string => {
     return Number(amount)
@@ -46,13 +48,18 @@ const Card: React.FC<CardProps> = ({
     },
   ];
 
+  const dropdownItems = [
+    { onClick: onClick, text: 'Deletar' },
+    { onClick: () => {}, text: 'Compartilhar' },
+  ];
+
   return (
     <S.CardItem>
       <S.CardHeader>
         <Text tag="h1" color="#3B5CB8" fontSize={23} fontWeight={700}>
           Seu resumo
         </Text>
-        <FaEllipsisV fontSize={18} color="#9aa3bc" />
+        <Dropdown items={dropdownItems} />
       </S.CardHeader>
       <S.CardTotal>
         <Text tag="h2" color="#606377" fontSize={14} fontWeight={400}>
@@ -75,7 +82,7 @@ const Card: React.FC<CardProps> = ({
         ))}
       </S.CardInfo>
       <S.CardFooter>
-        <Button>VER MAIS</Button>
+        <Button onClick={onClick}>VER MAIS</Button>
       </S.CardFooter>
     </S.CardItem>
   );
