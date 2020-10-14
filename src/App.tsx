@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useQuery, gql } from '@apollo/client';
+import { ALL_WEALTH_SUMARY } from 'querys/wealth';
 import { Card } from 'components';
 
 const data = {
@@ -10,14 +12,25 @@ const data = {
 };
 
 const App: React.FC = () => {
+  const { loading, error, data } = useQuery(ALL_WEALTH_SUMARY, {
+    variables: { limit: 10 },
+  });
+
+  if (loading) {
+    return <div>Loading..</div>;
+  }
   return (
     <div>
-      <Card
-        cdi={data.cdi}
-        gain={data.gain}
-        total={data.total}
-        profitability={data.profitability}
-      />
+      {data &&
+        data.wealthSummary.map((d: any) => (
+          <Card
+            cdi={d.cdi}
+            gain={d.gain}
+            total={d.total}
+            profitability={d.profitability}
+          />
+        ))}
+      {/* */}
     </div>
   );
 };
